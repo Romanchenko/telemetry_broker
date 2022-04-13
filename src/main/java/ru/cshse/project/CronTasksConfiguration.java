@@ -14,6 +14,6 @@ public class CronTasksConfiguration {
 
     @Bean
     public MetricsImportTask metricsImportTask() {
-        return new MetricsImportTask();
+        return new MetricsImportTask(exportService, metricsProvider);
     }
 }
