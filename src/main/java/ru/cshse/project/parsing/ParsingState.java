@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import ru.cshse.project.models.PrometheusMetricDto;
 
@@ -11,10 +12,11 @@ import ru.cshse.project.models.PrometheusMetricDto;
  * @author apollin
  */
 @Data
+@AllArgsConstructor
 public class ParsingState {
-    Status status;
-    List<PrometheusMetricDto> processed;
-    PrometheusMetricDto currentMetric;
+    private Status status;
+    private final List<PrometheusMetricDto> processed;
+    private PrometheusMetricDto currentMetric;
 
     public void addMetric(PrometheusMetricDto metricDto) {
         processed.add(metricDto);
@@ -39,11 +41,16 @@ public class ParsingState {
         currentMetric.getLabels().put(labelName, labelValue);
     }
 
+    public void clearLabels() {
+        currentMetric = currentMetric.toBuilder().labels(new HashMap<>()).build();
+    }
+
 
     public enum Status {
         START,
         PROCESSED_HELP,
         PROCESSED_TYPE,
-        PROCESSING_DATA;
+        PROCESSING_DATA,
+        FINISHED;
     }
 }

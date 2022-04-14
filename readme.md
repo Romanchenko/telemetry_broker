@@ -10,7 +10,7 @@ CREATE TABLE metrics.metrics (
     _id UUID,
     ts Date,
     name String,
-		type String
+	type String
     value Decimal64(5),
     labels Array(String)
 )

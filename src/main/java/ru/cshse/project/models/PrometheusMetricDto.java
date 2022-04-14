@@ -15,5 +15,6 @@ public class PrometheusMetricDto {
     String name;
     BigDecimal value;
     String type;
+    String description;
     Map<String, String> labels;
 }
