@@ -34,6 +34,10 @@ public class ParsingState {
         currentMetric = currentMetric.toBuilder().value(value).build();
     }
 
+    public void addMetricName(String name) {
+        currentMetric = currentMetric.toBuilder().name(name).build();
+    }
+
     public void addMetricLabel(String labelName, String labelValue) {
         if (currentMetric.getLabels() == null) {
             currentMetric = currentMetric.toBuilder().labels(new HashMap<>()).build();

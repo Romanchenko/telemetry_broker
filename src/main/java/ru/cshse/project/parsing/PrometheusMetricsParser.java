@@ -4,12 +4,16 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.cshse.project.models.PrometheusMetricDto;
 
 /**
  * @author apollin
  */
 public class PrometheusMetricsParser {
+
+    private static final Logger logger = LoggerFactory.getLogger(PrometheusMetricsParser.class);
 
     private static final String HELP_LINE_PREFIX = "# HELP";
     private static final String TYPE_LINE_PREFIX = "# TYPE";
@@ -41,6 +45,7 @@ public class PrometheusMetricsParser {
             String name = splitted[2];
             var description = String.join(" ", Arrays.asList(splitted).subList(3, splitted.length));
             state.setCurrentMetric(PrometheusMetricDto.builder().name(name).description(description).build());
+            state.setStatus(ParsingState.Status.PROCESSED_HELP);
             return;
         }
         if (line.startsWith(TYPE_LINE_PREFIX)) {
@@ -60,6 +65,7 @@ public class PrometheusMetricsParser {
                         state.getCurrentMetric().getName(), name));
             }
             state.addMetricType(type);
+            state.setStatus(ParsingState.Status.PROCESSED_TYPE);
             return;
         }
         if (
@@ -74,16 +80,26 @@ public class PrometheusMetricsParser {
 
         var splitted = line.split(" ");
         state.addMetricValue(new BigDecimal(splitted[1]));
-        addLabels(state, splitted[1]);
+        addLabels(state, splitted[0]);
         state.addMetric(state.getCurrentMetric());
+        state.setStatus(ParsingState.Status.PROCESSING_DATA);
     }
 
     private static void addLabels(ParsingState state, String s) {
         state.clearLabels();
+        var nameFinishPosition = s.indexOf('{');
+        var name = s.substring(0, nameFinishPosition == -1 ? s.length() : nameFinishPosition);
+        // for cases, when metric has suffix _sum or _count
+        state.addMetricName(name);
+        if (nameFinishPosition == -1) {
+            return;
+        }
+
         var labels = s
                 .replace(state.getCurrentMetric().getName(), "")
                 .replace("{", "")
                 .replace("}", "");
+
         Arrays.asList(labels.split(",")).forEach(labelAndValue -> {
             var splitted = labelAndValue.split("=");
             state.addMetricLabel(splitted[0], splitted[1]);
@@ -92,9 +108,6 @@ public class PrometheusMetricsParser {
 
     public static void finish(ParsingState state) {
         state.setStatus(ParsingState.Status.FINISHED);
-        if (state.getCurrentMetric() != null) {
-            state.addMetric(state.getCurrentMetric());
-        }
         state.setCurrentMetric(null);
     }
 }

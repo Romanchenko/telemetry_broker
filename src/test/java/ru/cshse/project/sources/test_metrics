@@ -1,0 +1,12 @@
+# HELP endpoint_no_pod Endpoints without an associated pod.
+# TYPE endpoint_no_pod gauge
+endpoint_no_pod 0
+# HELP go_gc_duration_seconds A summary of the pause duration of garbage collection cycles.
+# TYPE go_gc_duration_seconds summary
+go_gc_duration_seconds{quantile="0"} 5.6831e-05
+go_gc_duration_seconds{quantile="0.25"} 9.6578e-05
+go_gc_duration_seconds{quantile="0.5"} 0.000116036
+go_gc_duration_seconds{quantile="0.75"} 0.000189799
+go_gc_duration_seconds{quantile="1"} 0.040866342
+go_gc_duration_seconds_sum 0.394481746
+go_gc_duration_seconds_count 630
