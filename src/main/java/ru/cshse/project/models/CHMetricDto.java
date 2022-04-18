@@ -15,9 +15,10 @@ import lombok.Value;
 @Builder(toBuilder = true)
 public class CHMetricDto {
     UUID id;
-    Instant ts;
+    long ts;
     String name;
     String type;
     BigDecimal value;
     List<String> labels;
+    String description;
 }

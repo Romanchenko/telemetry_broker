@@ -17,18 +17,19 @@ public class Mapper {
     public static CHMetricDto map(PrometheusMetricDto prometheusMetricDto) {
         return CHMetricDto.builder()
                 .id(UUID.randomUUID())
-                .ts(Instant.now())
+                .ts(Instant.now().toEpochMilli())
                 .name(prometheusMetricDto.getName())
                 .type(prometheusMetricDto.getType())
                 .value(prometheusMetricDto.getValue())
                 .labels(mapLabels(prometheusMetricDto.getLabels()))
+                .description(prometheusMetricDto.getDescription())
                 .build();
     }
 
     private static List<String> mapLabels(Map<String, String> labels) {
         return labels.entrySet()
                 .stream()
-                .map(e -> String.format("%s=%s", e.getKey(), e.getValue()))
+                .map(e -> String.format("%s=%s", e.getKey(), e.getValue().replace("\"", "'")))
                 .collect(Collectors.toList());
     }
 }
