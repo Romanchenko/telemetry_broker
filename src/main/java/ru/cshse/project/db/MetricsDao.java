@@ -67,15 +67,11 @@ public class MetricsDao {
 
                 BinaryStreamUtils.writeString(stream, metric.getName());
 
-                BinaryStreamUtils.writeString(stream, metric.getType());
-
                 BinaryStreamUtils.writeDecimal128(stream, metric.getValue(), 5);
 
                 ClickHouseArrayValue<String> array = ClickHouseArrayValue.of(metric.getLabels().toArray(new String[0]));
                 ClickHouseRowBinaryProcessor.getMappedFunctions().serialize(array, config,
                         ClickHouseColumn.of("labels", "Array(String)"), stream);
-
-                BinaryStreamUtils.writeString(stream, metric.getDescription());
             } catch (IOException e) {
                 e.printStackTrace();
             }

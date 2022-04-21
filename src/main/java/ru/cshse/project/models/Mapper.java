@@ -19,10 +19,8 @@ public class Mapper {
                 .id(UUID.randomUUID())
                 .ts(Instant.now().toEpochMilli())
                 .name(prometheusMetricDto.getName())
-                .type(prometheusMetricDto.getType())
                 .value(prometheusMetricDto.getValue())
                 .labels(mapLabels(prometheusMetricDto.getLabels()))
-                .description(prometheusMetricDto.getDescription())
                 .build();
     }
 

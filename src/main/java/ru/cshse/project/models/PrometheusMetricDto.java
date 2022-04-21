@@ -14,7 +14,8 @@ import lombok.Value;
 public class PrometheusMetricDto {
     String name;
     BigDecimal value;
-    String type;
-    String description;
+    String type; // todo - change to int enum value
+    String instance;
+    String job;
     Map<String, String> labels;
 }

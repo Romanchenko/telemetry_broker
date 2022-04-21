@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
-import ru.cshse.project.sources.prometheus.models.TargetMetricsResponse;
+import ru.cshse.project.sources.prometheus.models.TargetMetadataResponse;
 
 /**
  * @author apollin
@@ -33,13 +33,13 @@ public class PrometheusClient {
                 .build();
     }
 
-    public TargetMetricsResponse getTargetsMetrics() {
+    public TargetMetadataResponse getTargetsMetadata() {
         return webClient
                 .get()
                 .uri(UriComponentsBuilder.fromHttpUrl(baseUrl).port(port).path("/api/v1/targets/metadata").build().toUri())
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(TargetMetricsResponse.class)
+                .bodyToMono(TargetMetadataResponse.class)
                 .block();
     }
 }

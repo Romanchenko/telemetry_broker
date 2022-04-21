@@ -8,7 +8,7 @@ import lombok.Data;
  * @author apollin
  */
 @Data
-public class TargetMetricsResponse {
-    private String status;
-    private List<MetricDescriptionDto> data;
+public class MetricDataDto {
+    private String resultType;
+    private List<MetricEntryDto> result;
 }
