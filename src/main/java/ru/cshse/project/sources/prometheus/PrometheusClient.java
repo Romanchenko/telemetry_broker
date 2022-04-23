@@ -2,6 +2,8 @@ package ru.cshse.project.sources.prometheus;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -15,6 +17,8 @@ import ru.cshse.project.sources.prometheus.models.TargetMetadataResponse;
  * @author apollin
  */
 public class PrometheusClient {
+    private static final Logger logger = LoggerFactory.getLogger(PrometheusClient.class);
+
     private final WebClient webClient;
     private final String baseUrl;
     private final int port;
@@ -22,10 +26,12 @@ public class PrometheusClient {
     @Autowired
     public PrometheusClient(
             @Value("${prometheus.base.url}") String prometheusUrl,
-            @Value("${prometheus.port}") int port
+            @Value("${prometheus.port.my}") String portString
     ) {
-        this.baseUrl = prometheusUrl;
-        this.port = port;
+        logger.info("Prometheus url {}", prometheusUrl);
+        logger.info("Prometheus port {}", portString);
+        this.baseUrl = "http://" + prometheusUrl;
+        this.port = Integer.parseInt(portString);
         final int size = 16 * 1024 * 1024;
         final ExchangeStrategies strategies = ExchangeStrategies.builder()
                 .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(size))

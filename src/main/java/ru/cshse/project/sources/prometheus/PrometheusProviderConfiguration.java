@@ -13,7 +13,7 @@ public class PrometheusProviderConfiguration {
     @Bean
     public PrometheusClient prometheusClient(
             @Value("${prometheus.base.url}") String prometheusUrl,
-            @Value("${prometheus.port}") int port
+            @Value("${prometheus.port.my}") String port
     ) {
         return new PrometheusClient(prometheusUrl, port);
     }

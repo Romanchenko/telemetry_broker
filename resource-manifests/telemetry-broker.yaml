@@ -22,7 +22,7 @@ spec:
         version: v1
     spec:
       containers:
-        - image: apollin/telemetry-broker:v1
+        - image: apollin/telemetry-broker:v2
           imagePullPolicy: Always
           name: telemetry-broker
           env:
