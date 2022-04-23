@@ -44,7 +44,7 @@ public class PrometheusMetricsParser {
             var splitted = line.split(" ");
             String name = splitted[2];
             var description = String.join(" ", Arrays.asList(splitted).subList(3, splitted.length));
-            state.setCurrentMetric(PrometheusMetricDto.builder().name(name).description(description).build());
+            state.setCurrentMetric(PrometheusMetricDto.builder().name(name).build());
             state.setStatus(ParsingState.Status.PROCESSED_HELP);
             return;
         }

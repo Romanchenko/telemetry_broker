@@ -12,5 +12,7 @@ class PrometheusClientTest {
         var client = new PrometheusClient("http://localhost", 9090);
         var targetMetricsResponse = client.getTargetsMetadata();
         System.out.println(targetMetricsResponse.getData().size());
+        var metric = client.getMetric(targetMetricsResponse.getData().get(0).getMetric());
+        System.out.println(metric.get());
     }
 }

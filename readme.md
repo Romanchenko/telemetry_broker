@@ -6,9 +6,12 @@
 
 ## Структура таблиц в ClickHouse
 ```
+CREATE DATABASE metrics
+
+
 CREATE TABLE metrics.metrics (
     _id UUID,
-    ts Date,
+    ts DateTime64(3, 'Europe/Moscow'),
     name String,
     value Decimal128(5),
     labels Array(String),

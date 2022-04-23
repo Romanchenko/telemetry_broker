@@ -7,15 +7,21 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import ru.cshse.project.sources.MetricsProvider;
-import ru.cshse.project.sources.prometheus.models.MetricDescriptionDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.cshse.project.sources.prometheus.models.MetricResponse;
-import ru.cshse.project.sources.prometheus.models.TargetDto;
 
 /**
  * @author apollin
  */
 public class Mapper {
+
+    private static final Logger logger = LoggerFactory.getLogger(Mapper.class);
+    private static final String NAN = "NaN";
+    private static final String PLUS_INF = "+Inf";
+    private static final String MINUS_INF = "-Inf";
+    private static final double MAX_VALUE = Math.pow(10, 30);
+    private static final double MIN_VALUE = -Math.pow(10, 30);
 
     private Mapper() {
     }
@@ -41,15 +47,26 @@ public class Mapper {
         return response.getData()
                 .getResult()
                 .stream()
+                .filter(data -> !data.getValue().get(1).equals(NAN))
                 .map(data -> PrometheusMetricDto.builder()
-                        .name(data.getMetric().getName())
-                        .instance(data.getMetric().getInstance())
-                        .job(data.getMetric().getJob())
-                        .labels(Map.of())
-                        .type(type)
-                        .value(BigDecimal.valueOf(Double.parseDouble((String) data.getValue().get(1))))
-                        .build()
+                                 .name(data.getMetric().getName())
+                                 .instance(data.getMetric().getInstance())
+                                 .job(data.getMetric().getJob())
+                                 .labels(Map.of())
+                                 .type(type)
+                                 .value(BigDecimal.valueOf(getDouble((String) data.getValue().get(1))))
+                                 .build()
                 )
                 .collect(Collectors.toList());
+    }
+
+    private static double getDouble(String value) {
+        if (value.equals(PLUS_INF)) {
+            return MAX_VALUE;
+        }
+        if (value.equals(MINUS_INF)) {
+            return MIN_VALUE;
+        }
+        return Double.parseDouble(value);
     }
 }

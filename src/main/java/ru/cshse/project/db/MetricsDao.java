@@ -35,7 +35,6 @@ public class MetricsDao {
 
     private static final String DATABASE = "metrics";
     private static final String TABLE = "metrics";
-    private static final String TABLE_TEST = "metrics_3";
     private static final ClickHouseFormat PREFERRED_FORMAT = ClickHouseFormat.RowBinaryWithNamesAndTypes;
 
 
