@@ -1,11 +1,14 @@
 package ru.cshse.project.sources.prometheus;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
+import ru.cshse.project.sources.prometheus.models.MetricResponse;
 import ru.cshse.project.sources.prometheus.models.TargetMetadataResponse;
 
 /**
@@ -41,5 +44,20 @@ public class PrometheusClient {
                 .retrieve()
                 .bodyToMono(TargetMetadataResponse.class)
                 .block();
+    }
+
+    public Optional<MetricResponse> getMetric(String metricName) {
+        return webClient
+                .get()
+                .uri(UriComponentsBuilder.fromHttpUrl(baseUrl)
+                        .port(port)
+                        .path("/api/v1/query")
+                        .queryParam("query", metricName)
+                        .build()
+                        .toUri())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(MetricResponse.class)
+                .blockOptional();
     }
 }

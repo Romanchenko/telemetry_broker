@@ -5,7 +5,6 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.cshse.project.models.Mapper;
-import ru.cshse.project.models.PrometheusMetadataDto;
 import ru.cshse.project.models.PrometheusMetricDto;
 
 /**

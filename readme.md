@@ -10,9 +10,10 @@ CREATE TABLE metrics.metrics (
     _id UUID,
     ts Date,
     name String,
-	type String
-    value Decimal64(5),
-    labels Array(String)
+    value Decimal128(5),
+    labels Array(String),
+    le Nullable(String),
+    quantile Nullable(String)
 )
 ENGINE = MergeTree()
 ORDER BY (ts)

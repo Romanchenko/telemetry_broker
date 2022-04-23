@@ -1,5 +1,6 @@
 package ru.cshse.project.sources.prometheus;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -36,5 +37,9 @@ public class MetadataCache {
 
     public Optional<PrometheusMetadataDto> get(String metricName) {
         return Optional.ofNullable(cache.get(metricName));
+    }
+
+    public Collection<PrometheusMetadataDto> getAll() {
+        return cache.values();
     }
 }

@@ -59,19 +59,55 @@ public class MetricsDao {
                 // in async mode, which is default, execution happens in a worker thread
                 future = request.data(stream.getInput()).execute();
                 // writing happens in main thread
+
+                /**
+                 * ID
+                 */
                 BinaryStreamUtils.writeUuid(stream, metric.getId());
 
+                /**
+                 * ts
+                 */
                 BinaryStreamUtils.writeDateTime64(stream,
                         LocalDateTime.ofInstant(Instant.ofEpochMilli(metric.getTs()), TimeZone.getDefault().toZoneId()),
                         TimeZone.getDefault());
 
+                /**
+                 * name
+                 */
                 BinaryStreamUtils.writeString(stream, metric.getName());
 
+
+                /**
+                 * value
+                 */
                 BinaryStreamUtils.writeDecimal128(stream, metric.getValue(), 5);
 
+                /**
+                 * labels
+                 */
                 ClickHouseArrayValue<String> array = ClickHouseArrayValue.of(metric.getLabels().toArray(new String[0]));
                 ClickHouseRowBinaryProcessor.getMappedFunctions().serialize(array, config,
                         ClickHouseColumn.of("labels", "Array(String)"), stream);
+
+                /**
+                 * Le label (Optional)
+                 */
+                if (metric.getLe() != null) {
+                    BinaryStreamUtils.writeString(stream, metric.getLe());
+                } else {
+                    BinaryStreamUtils.writeNull(stream);
+                }
+
+                /**
+                 * Quantile label (Optional)
+                 */
+                if (metric.getQuantile() != null) {
+                    BinaryStreamUtils.writeString(stream, metric.getQuantile());
+                } else {
+                    BinaryStreamUtils.writeNull(stream);
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
