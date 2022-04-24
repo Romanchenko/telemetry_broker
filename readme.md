@@ -4,6 +4,8 @@
 2. Загружаем метрики батчами (батчи - todo) в ClickHouse. Метаданные пока храним только в памяти.
 3. (todo) Напилить консольный клиент и/или настройку параметров экспорта простыми yaml-ами (пример от sensu https://docs.sensu.io/sensu-enterprise/latest/integrations/influxdb/)
 
+
+![Architecture](Architecture.png)
 ## Структура таблиц в ClickHouse
 ```
 CREATE DATABASE metrics
