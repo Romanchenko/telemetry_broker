@@ -3,6 +3,7 @@ package ru.cshse.project.db;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -47,7 +48,7 @@ public class MetricsDao {
         this.client = client;
     }
 
-    public void insert(CHMetricDto metric) {
+    public void insert(List<CHMetricDto> metrics) {
         try {
             ClickHouseRequest.Mutation request = client.connect(server).write().table(TABLE)
                     .format(ClickHouseFormat.RowBinary);
@@ -55,56 +56,11 @@ public class MetricsDao {
             CompletableFuture<ClickHouseResponse> future = null;
             try (ClickHousePipedStream stream = new ClickHousePipedStream(config.getWriteBufferSize(),
                     config.getMaxQueuedBuffers(), config.getSocketTimeout())) {
-                // in async mode, which is default, execution happens in a worker thread
+
                 future = request.data(stream.getInput()).execute();
-                // writing happens in main thread
 
-                /**
-                 * ID
-                 */
-                BinaryStreamUtils.writeUuid(stream, metric.getId());
-
-                /**
-                 * ts
-                 */
-                BinaryStreamUtils.writeDateTime64(stream,
-                        LocalDateTime.ofInstant(Instant.ofEpochMilli(metric.getTs()), TimeZone.getDefault().toZoneId()),
-                        TimeZone.getDefault());
-
-                /**
-                 * name
-                 */
-                BinaryStreamUtils.writeString(stream, metric.getName());
-
-
-                /**
-                 * value
-                 */
-                BinaryStreamUtils.writeDecimal128(stream, metric.getValue(), 5);
-
-                /**
-                 * labels
-                 */
-                ClickHouseArrayValue<String> array = ClickHouseArrayValue.of(metric.getLabels().toArray(new String[0]));
-                ClickHouseRowBinaryProcessor.getMappedFunctions().serialize(array, config,
-                        ClickHouseColumn.of("labels", "Array(String)"), stream);
-
-                /**
-                 * Le label (Optional)
-                 */
-                if (metric.getLe() != null) {
-                    BinaryStreamUtils.writeString(stream, metric.getLe());
-                } else {
-                    BinaryStreamUtils.writeNull(stream);
-                }
-
-                /**
-                 * Quantile label (Optional)
-                 */
-                if (metric.getQuantile() != null) {
-                    BinaryStreamUtils.writeString(stream, metric.getQuantile());
-                } else {
-                    BinaryStreamUtils.writeNull(stream);
+                for (var metric : metrics) {
+                    writeMetric(stream, metric, config);
                 }
 
             } catch (IOException e) {
@@ -118,6 +74,58 @@ public class MetricsDao {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void writeMetric(
+            ClickHousePipedStream stream, CHMetricDto metric, ClickHouseConfig config
+    ) throws IOException {
+        /**
+         * ID
+         */
+        BinaryStreamUtils.writeUuid(stream, metric.getId());
+
+        /**
+         * ts
+         */
+        BinaryStreamUtils.writeDateTime64(stream,
+                LocalDateTime.ofInstant(Instant.ofEpochMilli(metric.getTs()), TimeZone.getDefault().toZoneId()),
+                TimeZone.getDefault());
+
+        /**
+         * name
+         */
+        BinaryStreamUtils.writeString(stream, metric.getName());
+
+
+        /**
+         * value
+         */
+        BinaryStreamUtils.writeDecimal128(stream, metric.getValue(), 5);
+
+        /**
+         * labels
+         */
+        ClickHouseArrayValue<String> array = ClickHouseArrayValue.of(metric.getLabels().toArray(new String[0]));
+        ClickHouseRowBinaryProcessor.getMappedFunctions().serialize(array, config,
+                ClickHouseColumn.of("labels", "Array(String)"), stream);
+
+        /**
+         * Le label (Optional)
+         */
+        if (metric.getLe() != null) {
+            BinaryStreamUtils.writeString(stream, metric.getLe());
+        } else {
+            BinaryStreamUtils.writeNull(stream);
+        }
+
+        /**
+         * Quantile label (Optional)
+         */
+        if (metric.getQuantile() != null) {
+            BinaryStreamUtils.writeString(stream, metric.getQuantile());
+        } else {
+            BinaryStreamUtils.writeNull(stream);
         }
     }
 }

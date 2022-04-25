@@ -1,6 +1,7 @@
 package ru.cshse.project.db;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +22,6 @@ public class ClickHouseExportService {
     }
 
     public void export(Collection<PrometheusMetricDto> prometheusMetrics) {
-        // todo: add batches
-        for (var metric : prometheusMetrics) {
-            metricsDao.insert(Mapper.map(metric));
-        }
+        metricsDao.insert(prometheusMetrics.stream().map(Mapper::map).collect(Collectors.toList()));
     }
 }
