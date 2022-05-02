@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class PrometheusClientTest {
 
     @Test
-    //Disabled
+    @Disabled
     public void test() {
         var client = new PrometheusClient("localhost", "9090");
         var targetMetricsResponse = client.getTargetsMetadata();
