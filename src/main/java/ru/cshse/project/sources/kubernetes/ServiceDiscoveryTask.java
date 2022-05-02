@@ -1,10 +1,12 @@
 package ru.cshse.project.sources.kubernetes;
 
 import java.io.IOException;
+import java.time.Instant;
 
 import io.kubernetes.client.openapi.ApiException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -15,9 +17,19 @@ import org.springframework.stereotype.Component;
 public class ServiceDiscoveryTask {
     private static final Logger logger = LoggerFactory.getLogger(ServiceDiscoveryTask.class);
 
-    @Scheduled(fixedDelayString = "${import.task.fixedDelay.in.milliseconds}")
+    private final PodsRegistry registry;
+
+    @Autowired
+    public ServiceDiscoveryTask(PodsRegistry registry) {
+        this.registry = registry;
+    }
+
+    @Scheduled(fixedDelayString = "${import.task.fixedDelay.in.milliseconds}") // todo: add pwn property for delay
     public void run() throws IOException, ApiException {
-        logger.info("Running test pods metric collector task");
-        PodsMetricProvider.getAllPods();
+        Instant start = Instant.now();
+        logger.info("Starting update of endpoints for scraping");
+        var allPods = PodsDiscoveryService.getAllPods();
+        registry.updateAll(allPods);
+        logger.info("Finished update of endpoints in {}ms", Instant.now().toEpochMilli() - start.toEpochMilli());
     }
 }

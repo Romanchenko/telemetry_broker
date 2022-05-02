@@ -8,7 +8,6 @@ import lombok.Value;
 @Value
 public class Pod {
     String ip;
-    String service;
-    String cluster;
-    String name;
+    String appName;
+    String namespace;
 }
