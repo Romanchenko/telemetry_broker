@@ -24,7 +24,7 @@ public class ServiceDiscoveryTask {
         this.registry = registry;
     }
 
-    @Scheduled(fixedDelayString = "${import.task.fixedDelay.in.milliseconds}") // todo: add pwn property for delay
+    @Scheduled(fixedDelayString = "${discovery.task.fixedDelay.in.milliseconds}")
     public void run() throws IOException, ApiException {
         Instant start = Instant.now();
         logger.info("Starting update of endpoints for scraping");

@@ -18,18 +18,18 @@ public class PodsRegistry {
         this.registry = new ConcurrentHashMap<>();
     }
 
-    public synchronized void add(Pod pod) {
-        registry.put(pod.getIp(), pod);
-    }
-
     public Collection<Pod> getAll() {
-        return List.copyOf(registry.values());
+        synchronized (registry) {
+            return List.copyOf(registry.values());
+        }
     }
 
-    public synchronized void updateAll(List<Pod> allPods) {
-        registry.clear();
-        for (var pod : allPods) {
-            registry.put(pod.getIp(), pod);
+    public void updateAll(List<Pod> allPods) {
+        synchronized (registry) {
+            registry.clear();
+            for (var pod : allPods) {
+                registry.put(pod.getIp(), pod);
+            }
         }
     }
 }
