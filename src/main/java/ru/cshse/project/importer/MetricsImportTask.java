@@ -25,7 +25,7 @@ public class MetricsImportTask {
     public MetricsImportTask(
             @Value("${clickhouse.export.batch.size:50}") int batchSize,
             ClickHouseExportService exportService,
-            @Qualifier("prometheusMetricsProvider") MetricsProvider metricsProvider
+            @Qualifier("podsMetricProvider") MetricsProvider metricsProvider
     ) {
         this.batchSize = batchSize;
         this.exportService = exportService;

@@ -1,0 +1,229 @@
+# TYPE istio_agent_endpoint_no_pod gauge
+istio_agent_endpoint_no_pod 0
+# HELP istio_agent_go_gc_duration_seconds A summary of the pause duration of garbage collection cycles.
+# TYPE istio_agent_go_gc_duration_seconds summary
+istio_agent_go_gc_duration_seconds{quantile="0"} 4.0113e-05
+istio_agent_go_gc_duration_seconds{quantile="0.25"} 7.3543e-05
+istio_agent_go_gc_duration_seconds{quantile="0.5"} 0.000105155
+istio_agent_go_gc_duration_seconds{quantile="0.75"} 0.000127745
+istio_agent_go_gc_duration_seconds{quantile="1"} 0.023985335
+istio_agent_go_gc_duration_seconds_sum 0.049351133
+istio_agent_go_gc_duration_seconds_count 92
+# HELP istio_agent_go_goroutines Number of goroutines that currently exist.
+# TYPE istio_agent_go_goroutines gauge
+istio_agent_go_goroutines 61
+# HELP istio_agent_go_info Information about the Go environment.
+# TYPE istio_agent_go_info gauge
+istio_agent_go_info{version="go1.17.6"} 1
+# HELP istio_agent_go_memstats_alloc_bytes Number of bytes allocated and still in use.
+# TYPE istio_agent_go_memstats_alloc_bytes gauge
+istio_agent_go_memstats_alloc_bytes 1.0500992e+07
+# HELP istio_agent_go_memstats_alloc_bytes_total Total number of bytes allocated, even if freed.
+# TYPE istio_agent_go_memstats_alloc_bytes_total counter
+istio_agent_go_memstats_alloc_bytes_total 4.84048528e+08
+# HELP istio_agent_go_memstats_buck_hash_sys_bytes Number of bytes used by the profiling bucket hash table.
+# TYPE istio_agent_go_memstats_buck_hash_sys_bytes gauge
+istio_agent_go_memstats_buck_hash_sys_bytes 1.49858e+06
+# HELP istio_agent_go_memstats_frees_total Total number of frees.
+# TYPE istio_agent_go_memstats_frees_total counter
+istio_agent_go_memstats_frees_total 2.55559e+06
+# HELP istio_agent_go_memstats_gc_cpu_fraction The fraction of this program's available CPU time used by the GC since the program started.
+# TYPE istio_agent_go_memstats_gc_cpu_fraction gauge
+istio_agent_go_memstats_gc_cpu_fraction 1.211218683634264e-05
+# HELP istio_agent_go_memstats_gc_sys_bytes Number of bytes used for garbage collection system metadata.
+# TYPE istio_agent_go_memstats_gc_sys_bytes gauge
+istio_agent_go_memstats_gc_sys_bytes 6.103576e+06
+# HELP istio_agent_go_memstats_heap_alloc_bytes Number of heap bytes allocated and still in use.
+# TYPE istio_agent_go_memstats_heap_alloc_bytes gauge
+istio_agent_go_memstats_heap_alloc_bytes 1.0500992e+07
+# HELP istio_agent_go_memstats_heap_idle_bytes Number of heap bytes waiting to be used.
+# TYPE istio_agent_go_memstats_heap_idle_bytes gauge
+istio_agent_go_memstats_heap_idle_bytes 7.159808e+06
+# HELP istio_agent_go_memstats_heap_inuse_bytes Number of heap bytes that are in use.
+# TYPE istio_agent_go_memstats_heap_inuse_bytes gauge
+istio_agent_go_memstats_heap_inuse_bytes 1.253376e+07
+# HELP istio_agent_go_memstats_heap_objects Number of allocated objects.
+# TYPE istio_agent_go_memstats_heap_objects gauge
+istio_agent_go_memstats_heap_objects 47921
+# HELP istio_agent_go_memstats_heap_released_bytes Number of heap bytes released to OS.
+# TYPE istio_agent_go_memstats_heap_released_bytes gauge
+istio_agent_go_memstats_heap_released_bytes 4.554752e+06
+# HELP istio_agent_go_memstats_heap_sys_bytes Number of heap bytes obtained from system.
+# TYPE istio_agent_go_memstats_heap_sys_bytes gauge
+istio_agent_go_memstats_heap_sys_bytes 1.9693568e+07
+# HELP istio_agent_go_memstats_last_gc_time_seconds Number of seconds since 1970 of last garbage collection.
+# TYPE istio_agent_go_memstats_last_gc_time_seconds gauge
+istio_agent_go_memstats_last_gc_time_seconds 1.6519222247765868e+09
+# HELP istio_agent_go_memstats_lookups_total Total number of pointer lookups.
+# TYPE istio_agent_go_memstats_lookups_total counter
+istio_agent_go_memstats_lookups_total 0
+# HELP istio_agent_go_memstats_mallocs_total Total number of mallocs.
+# TYPE istio_agent_go_memstats_mallocs_total counter
+istio_agent_go_memstats_mallocs_total 2.603511e+06
+# HELP istio_agent_go_memstats_mcache_inuse_bytes Number of bytes in use by mcache structures.
+# TYPE istio_agent_go_memstats_mcache_inuse_bytes gauge
+istio_agent_go_memstats_mcache_inuse_bytes 4800
+# HELP istio_agent_go_memstats_mcache_sys_bytes Number of bytes used for mcache structures obtained from system.
+# TYPE istio_agent_go_memstats_mcache_sys_bytes gauge
+istio_agent_go_memstats_mcache_sys_bytes 16384
+# HELP istio_agent_go_memstats_mspan_inuse_bytes Number of bytes in use by mspan structures.
+# TYPE istio_agent_go_memstats_mspan_inuse_bytes gauge
+istio_agent_go_memstats_mspan_inuse_bytes 164288
+# HELP istio_agent_go_memstats_mspan_sys_bytes Number of bytes used for mspan structures obtained from system.
+# TYPE istio_agent_go_memstats_mspan_sys_bytes gauge
+istio_agent_go_memstats_mspan_sys_bytes 196608
+# HELP istio_agent_go_memstats_next_gc_bytes Number of heap bytes when next garbage collection will take place.
+# TYPE istio_agent_go_memstats_next_gc_bytes gauge
+istio_agent_go_memstats_next_gc_bytes 1.355456e+07
+# HELP istio_agent_go_memstats_other_sys_bytes Number of bytes used for other system allocations.
+# TYPE istio_agent_go_memstats_other_sys_bytes gauge
+istio_agent_go_memstats_other_sys_bytes 918556
+# HELP istio_agent_go_memstats_stack_inuse_bytes Number of bytes in use by the stack allocator.
+# TYPE istio_agent_go_memstats_stack_inuse_bytes gauge
+istio_agent_go_memstats_stack_inuse_bytes 1.277952e+06
+# HELP istio_agent_go_memstats_stack_sys_bytes Number of bytes obtained from system for stack allocator.
+# TYPE istio_agent_go_memstats_stack_sys_bytes gauge
+istio_agent_go_memstats_stack_sys_bytes 1.277952e+06
+# HELP istio_agent_go_memstats_sys_bytes Number of bytes obtained from system.
+# TYPE istio_agent_go_memstats_sys_bytes gauge
+istio_agent_go_memstats_sys_bytes 2.9705224e+07
+# HELP istio_agent_go_threads Number of OS threads created.
+# TYPE istio_agent_go_threads gauge
+istio_agent_go_threads 12
+# HELP istio_agent_istiod_connection_terminations The total number of connection errors to Istiod
+# TYPE istio_agent_istiod_connection_terminations counter
+istio_agent_istiod_connection_terminations{type="cancelled"} 5
+# HELP istio_agent_num_failed_outgoing_requests Number of failed outgoing requests (e.g. to a token exchange server, CA, etc.)
+# TYPE istio_agent_num_failed_outgoing_requests counter
+istio_agent_num_failed_outgoing_requests{request_type="csr"} 7
+# HELP istio_agent_num_outgoing_requests Number of total outgoing requests (e.g. to a token exchange server, CA, etc.)
+# TYPE istio_agent_num_outgoing_requests counter
+istio_agent_num_outgoing_requests{request_type="csr"} 8
+# HELP istio_agent_num_outgoing_retries Number of outgoing retry requests (e.g. to a token exchange server, CA, etc.)
+# TYPE istio_agent_num_outgoing_retries counter
+istio_agent_num_outgoing_retries{request_type="csr"} 32
+# HELP istio_agent_outgoing_latency The latency of outgoing requests (e.g. to a token exchange server, CA, etc.) in milliseconds.
+# TYPE istio_agent_outgoing_latency counter
+istio_agent_outgoing_latency{request_type="csr"} 14009.346666
+# HELP istio_agent_pilot_conflict_inbound_listener Number of conflicting inbound listeners.
+# TYPE istio_agent_pilot_conflict_inbound_listener gauge
+istio_agent_pilot_conflict_inbound_listener 0
+# HELP istio_agent_pilot_conflict_outbound_listener_http_over_current_tcp Number of conflicting wildcard http listeners with current wildcard tcp listener.
+# TYPE istio_agent_pilot_conflict_outbound_listener_http_over_current_tcp gauge
+istio_agent_pilot_conflict_outbound_listener_http_over_current_tcp 0
+# HELP istio_agent_pilot_conflict_outbound_listener_tcp_over_current_http Number of conflicting wildcard tcp listeners with current wildcard http listener.
+# TYPE istio_agent_pilot_conflict_outbound_listener_tcp_over_current_http gauge
+istio_agent_pilot_conflict_outbound_listener_tcp_over_current_http 0
+# HELP istio_agent_pilot_conflict_outbound_listener_tcp_over_current_tcp Number of conflicting tcp listeners with current tcp listener.
+# TYPE istio_agent_pilot_conflict_outbound_listener_tcp_over_current_tcp gauge
+istio_agent_pilot_conflict_outbound_listener_tcp_over_current_tcp 0
+# HELP istio_agent_pilot_destrule_subsets Duplicate subsets across destination rules for same host
+# TYPE istio_agent_pilot_destrule_subsets gauge
+istio_agent_pilot_destrule_subsets 0
+# HELP istio_agent_pilot_duplicate_envoy_clusters Duplicate envoy clusters caused by service entries with same hostname
+# TYPE istio_agent_pilot_duplicate_envoy_clusters gauge
+istio_agent_pilot_duplicate_envoy_clusters 0
+# HELP istio_agent_pilot_eds_no_instances Number of clusters without instances.
+# TYPE istio_agent_pilot_eds_no_instances gauge
+istio_agent_pilot_eds_no_instances 0
+# HELP istio_agent_pilot_endpoint_not_ready Endpoint found in unready state.
+# TYPE istio_agent_pilot_endpoint_not_ready gauge
+istio_agent_pilot_endpoint_not_ready 0
+# HELP istio_agent_pilot_no_ip Pods not found in the endpoint table, possibly invalid.
+# TYPE istio_agent_pilot_no_ip gauge
+istio_agent_pilot_no_ip 0
+# HELP istio_agent_pilot_virt_services Total virtual services known to pilot.
+# TYPE istio_agent_pilot_virt_services gauge
+istio_agent_pilot_virt_services 0
+# HELP istio_agent_pilot_vservice_dup_domain Virtual services with dup domains.
+# TYPE istio_agent_pilot_vservice_dup_domain gauge
+istio_agent_pilot_vservice_dup_domain 0
+# HELP istio_agent_pilot_xds Number of endpoints connected to this pilot using XDS.
+# TYPE istio_agent_pilot_xds gauge
+istio_agent_pilot_xds{version="1.12.3"} 2
+# HELP istio_agent_pilot_xds_config_size_bytes Distribution of configuration sizes pushed to clients
+# TYPE istio_agent_pilot_xds_config_size_bytes histogram
+istio_agent_pilot_xds_config_size_bytes_bucket{type="type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.Secret",le="1"} 0
+istio_agent_pilot_xds_config_size_bytes_bucket{type="type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.Secret",le="10000"} 2
+istio_agent_pilot_xds_config_size_bytes_bucket{type="type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.Secret",le="1e+06"} 2
+istio_agent_pilot_xds_config_size_bytes_bucket{type="type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.Secret",le="4e+06"} 2
+istio_agent_pilot_xds_config_size_bytes_bucket{type="type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.Secret",le="1e+07"} 2
+istio_agent_pilot_xds_config_size_bytes_bucket{type="type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.Secret",le="4e+07"} 2
+istio_agent_pilot_xds_config_size_bytes_bucket{type="type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.Secret",le="+Inf"} 2
+istio_agent_pilot_xds_config_size_bytes_sum{type="type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.Secret"} 5140
+istio_agent_pilot_xds_config_size_bytes_count{type="type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.Secret"} 2
+# HELP istio_agent_pilot_xds_push_time Total time in seconds Pilot takes to push lds, rds, cds and eds.
+# TYPE istio_agent_pilot_xds_push_time histogram
+istio_agent_pilot_xds_push_time_bucket{type="sds",le="0.01"} 2
+istio_agent_pilot_xds_push_time_bucket{type="sds",le="0.1"} 2
+istio_agent_pilot_xds_push_time_bucket{type="sds",le="1"} 2
+istio_agent_pilot_xds_push_time_bucket{type="sds",le="3"} 2
+istio_agent_pilot_xds_push_time_bucket{type="sds",le="5"} 2
+istio_agent_pilot_xds_push_time_bucket{type="sds",le="10"} 2
+istio_agent_pilot_xds_push_time_bucket{type="sds",le="20"} 2
+istio_agent_pilot_xds_push_time_bucket{type="sds",le="30"} 2
+istio_agent_pilot_xds_push_time_bucket{type="sds",le="+Inf"} 2
+istio_agent_pilot_xds_push_time_sum{type="sds"} 0.001475044
+istio_agent_pilot_xds_push_time_count{type="sds"} 2
+# HELP istio_agent_pilot_xds_pushes Pilot build and send errors for lds, rds, cds and eds.
+# TYPE istio_agent_pilot_xds_pushes counter
+istio_agent_pilot_xds_pushes{type="sds"} 2
+# HELP istio_agent_pilot_xds_send_time Total time in seconds Pilot takes to send generated configuration.
+# TYPE istio_agent_pilot_xds_send_time histogram
+istio_agent_pilot_xds_send_time_bucket{le="0.01"} 2
+istio_agent_pilot_xds_send_time_bucket{le="0.1"} 2
+istio_agent_pilot_xds_send_time_bucket{le="1"} 2
+istio_agent_pilot_xds_send_time_bucket{le="3"} 2
+istio_agent_pilot_xds_send_time_bucket{le="5"} 2
+istio_agent_pilot_xds_send_time_bucket{le="10"} 2
+istio_agent_pilot_xds_send_time_bucket{le="20"} 2
+istio_agent_pilot_xds_send_time_bucket{le="30"} 2
+istio_agent_pilot_xds_send_time_bucket{le="+Inf"} 2
+istio_agent_pilot_xds_send_time_sum 2.8993e-05
+istio_agent_pilot_xds_send_time_count 2
+# TYPE envoy_cluster_upstream_cx_length_ms histogram
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="0.5"} 0
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="1"} 0
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="5"} 3
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="10"} 4
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="25"} 7
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="50"} 7
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="100"} 7
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="250"} 7
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="500"} 7
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="1000"} 7
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="2500"} 7
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="5000"} 7
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="10000"} 7
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="30000"} 7
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="60000"} 7
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="300000"} 7
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="600000"} 7
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="1800000"} 8
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="3600000"} 12
+envoy_cluster_upstream_cx_length_ms_bucket{cluster_name="xds-grpc",le="+Inf"} 12
+envoy_cluster_upstream_cx_length_ms_sum{cluster_name="xds-grpc"} 9150073.6999999992549419403076172
+envoy_cluster_upstream_cx_length_ms_count{cluster_name="xds-grpc"} 12
+# TYPE envoy_server_initialization_time_ms histogram
+envoy_server_initialization_time_ms_bucket{le="0.5"} 0
+envoy_server_initialization_time_ms_bucket{le="1"} 0
+envoy_server_initialization_time_ms_bucket{le="5"} 0
+envoy_server_initialization_time_ms_bucket{le="10"} 0
+envoy_server_initialization_time_ms_bucket{le="25"} 0
+envoy_server_initialization_time_ms_bucket{le="50"} 0
+envoy_server_initialization_time_ms_bucket{le="100"} 0
+envoy_server_initialization_time_ms_bucket{le="250"} 0
+envoy_server_initialization_time_ms_bucket{le="500"} 0
+envoy_server_initialization_time_ms_bucket{le="1000"} 0
+envoy_server_initialization_time_ms_bucket{le="2500"} 0
+envoy_server_initialization_time_ms_bucket{le="5000"} 0
+envoy_server_initialization_time_ms_bucket{le="10000"} 0
+envoy_server_initialization_time_ms_bucket{le="30000"} 0
+envoy_server_initialization_time_ms_bucket{le="60000"} 1
+envoy_server_initialization_time_ms_bucket{le="300000"} 1
+envoy_server_initialization_time_ms_bucket{le="600000"} 1
+envoy_server_initialization_time_ms_bucket{le="1800000"} 1
+envoy_server_initialization_time_ms_bucket{le="3600000"} 1
+envoy_server_initialization_time_ms_bucket{le="+Inf"} 1
+envoy_server_initialization_time_ms_sum{} 37500
+envoy_server_initialization_time_ms_count{} 1

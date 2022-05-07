@@ -22,7 +22,7 @@ spec:
         version: v1
     spec:
       containers:
-        - image: apollin/telemetry-broker:v2
+        - image: apollin/telemetry-broker-sandbox:v4
           imagePullPolicy: Always
           name: telemetry-broker
           env:
@@ -32,6 +32,8 @@ spec:
               value: telemetry-broker
             - name: PROMETHEUS_URL
               value: prometheus.istio-system.svc.cluster.local
+            - name: CH_HOST
+              value: 51.250.75.145
 
           ports:
             - containerPort: 8080
