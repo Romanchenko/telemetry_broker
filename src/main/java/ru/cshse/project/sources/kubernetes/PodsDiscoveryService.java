@@ -28,7 +28,7 @@ public class PodsDiscoveryService {
         CoreV1Api api = new CoreV1Api();
 
         List<Pod> pods = new ArrayList<>();
-        V1EndpointsList endpoints = api.listEndpointsForAllNamespaces(null, null, null, null, null, null, null, null, null);
+        V1EndpointsList endpoints = api.listEndpointsForAllNamespaces(null, null, null, null, null, null, null, null, null, null);
         for (V1Endpoints eps : endpoints.getItems()) {
             var subsets = eps.getSubsets();
             if (subsets == null) {
