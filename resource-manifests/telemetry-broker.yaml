@@ -32,6 +32,8 @@ spec:
               value: telemetry-broker
             - name: PROMETHEUS_URL
               value: prometheus.istio-system.svc.cluster.local
+            - name: CH_HOST
+              value: 51.250.75.145
 
           ports:
             - containerPort: 8080

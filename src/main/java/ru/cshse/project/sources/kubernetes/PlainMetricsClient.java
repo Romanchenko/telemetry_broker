@@ -3,6 +3,7 @@ package ru.cshse.project.sources.kubernetes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -10,6 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 /**
  * @author apollin
  */
+@Component
 public class PlainMetricsClient {
 
     private static final Logger logger = LoggerFactory.getLogger(PlainMetricsClient.class);

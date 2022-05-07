@@ -49,21 +49,11 @@ public class PrometheusMetricsParser {
             return;
         }
         if (line.startsWith(TYPE_LINE_PREFIX)) {
-            if (
-                    state.getStatus() != ParsingState.Status.PROCESSED_HELP
-            ) {
-                throw new IllegalStateException(
-                        String.format("State status is %s, when should be PROCESSED_HELP", state.getStatus().name())
-                );
-            }
             // example : # TYPE pilot_xds gauge
             var splitted = line.split(" ");
             String name = splitted[2];
             var type = splitted[3];
-            if (!name.equals(state.getCurrentMetric().getName())) {
-                throw new IllegalStateException(String.format("Metric name expected %s, but found %s in TYPE line",
-                        state.getCurrentMetric().getName(), name));
-            }
+            state.setCurrentMetric(PrometheusMetricDto.builder().name(name).build());
             state.addMetricType(type);
             state.setStatus(ParsingState.Status.PROCESSED_TYPE);
             return;
@@ -101,6 +91,9 @@ public class PrometheusMetricsParser {
                 .replace("}", "");
 
         Arrays.asList(labels.split(",")).forEach(labelAndValue -> {
+            if (!labelAndValue.contains("=")) {
+                return;
+            }
             var splitted = labelAndValue.split("=");
             state.addMetricLabel(splitted[0], splitted[1]);
         });

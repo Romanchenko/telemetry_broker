@@ -3,6 +3,7 @@ package ru.cshse.project.sources.kubernetes;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.sql.PreparedStatement;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Optional;
@@ -16,6 +17,8 @@ import java.util.stream.Stream;
 import lombok.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.cshse.project.models.PrometheusMetricDto;
 import ru.cshse.project.parsing.PrometheusMetricsParser;
 import ru.cshse.project.sources.MetricsProvider;
@@ -23,6 +26,7 @@ import ru.cshse.project.sources.MetricsProvider;
 /**
  * @author apollin
  */
+@Component
 public class PodsMetricProvider implements MetricsProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(PodsMetricProvider.class);
@@ -32,7 +36,12 @@ public class PodsMetricProvider implements MetricsProvider {
     private final PlainMetricsClient client;
     private final int threadCount;
 
-    public PodsMetricProvider(PodsRegistry registry, PlainMetricsClient client, int threadCount) {
+    @Autowired
+    public PodsMetricProvider(
+            PodsRegistry registry,
+            PlainMetricsClient client,
+            @org.springframework.beans.factory.annotation.Value("${pods.metrics.collection.thread.count}") int threadCount
+    ) {
         this.registry = registry;
         this.client = client;
         this.threadCount = threadCount;
@@ -65,7 +74,10 @@ public class PodsMetricProvider implements MetricsProvider {
 
     private static Stream<PrometheusMetricDto> map(JobResult jobResult) {
         var plainStringResult = jobResult.getPlainString();
-        var reader = new BufferedReader(new StringReader(plainStringResult));
+        if (plainStringResult.isEmpty()) {
+            return Stream.empty();
+        }
+        var reader = new BufferedReader(new StringReader(plainStringResult.get()));
         var state = PrometheusMetricsParser.start();
         while (true) {
             String line = null;
@@ -103,8 +115,14 @@ public class PodsMetricProvider implements MetricsProvider {
 
         @Override
         public JobResult call() {
+            Optional<String> result = Optional.empty();
+            try {
+                result = Optional.of(client.get(pod.getIp()));
+            } catch (Exception e) {
+                logger.error("Could not get metrics from {}, {}", pod.getAppName(), pod.getIp(), e);
+            }
             return new JobResult(
-                    client.get(pod.getIp()),
+                    result,
                     pod
             );
         }
@@ -112,7 +130,7 @@ public class PodsMetricProvider implements MetricsProvider {
 
     @Value
     private static class JobResult {
-        String plainString;
+        Optional<String> plainString;
         Pod pod;
     }
 }
