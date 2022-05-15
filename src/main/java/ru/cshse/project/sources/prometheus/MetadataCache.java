@@ -28,7 +28,7 @@ public class MetadataCache {
         this.cache = new ConcurrentHashMap<>();
     }
 
-    @Scheduled(fixedDelayString = "${metadata.import.task.fixedDelay.in.milliseconds}")
+//    @Scheduled(fixedDelayString = "${metadata.import.task.fixedDelay.in.milliseconds}")
     public void execute() {
         logger.info("Refreshing metadata cache");
         metadataProvider.get().forEach(meta -> cache.put(meta.getName(), meta));

@@ -17,6 +17,7 @@
   <description>Demo project for Spring Boot</description>
   <properties>
     <java.version>11</java.version>
+    <mongodb.version>4.6.0</mongodb.version>
   </properties>
   <repositories>
     <repository>
@@ -43,6 +44,8 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+
+
 
     <dependency>
       <groupId>org.springframework.boot</groupId>

@@ -1,16 +1,9 @@
 package ru.cshse.project.settings;
 
-import java.util.Arrays;
-
 import com.mongodb.client.MongoClient;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-import org.bson.UuidRepresentation;
 import org.bson.codecs.configuration.CodecProvider;
-import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.springframework.context.annotation.Bean;
@@ -41,26 +34,9 @@ public class SettingsMongoConfiguration {
     public MongoDatabase mongoDatabase(
             MongoConnectionProperties mongoConnectionProperties
     ) {
-        System.setProperty("javax.net.ssl.trustStore", "/opt/yandex/keystore");
-        System.setProperty("javax.net.ssl.trustStorePassword", "storepass");
-
         CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
         CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
-        MongoClient client = MongoClients.create(MongoClientSettings.builder()
-                .applyToClusterSettings(builder ->
-                        builder.hosts(Arrays.asList(
-                                new ServerAddress(mongoConnectionProperties.getHost(), mongoConnectionProperties.getPort())
-                        )))
-                .applyToSslSettings(builder ->
-                        builder.enabled(true))
-                .credential(MongoCredential.createCredential(
-                        mongoConnectionProperties.getUser(),
-                        "main",
-                        mongoConnectionProperties.getPassword().toCharArray())
-                )
-                .codecRegistry(pojoCodecRegistry)
-                .uuidRepresentation(UuidRepresentation.STANDARD)
-                .build());
+        MongoClient client = MongoClients.create(mongoConnectionProperties.getUri());
         return client
                 .getDatabase(DATABASE)
                 .withCodecRegistry(pojoCodecRegistry);

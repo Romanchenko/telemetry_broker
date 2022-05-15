@@ -11,8 +11,5 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "settings.mongo")
 @Data
 public class MongoConnectionProperties {
-    private String host;
-    private int port;
-    private String user;
-    private String password;
+    private String uri;
 }

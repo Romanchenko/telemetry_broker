@@ -29,6 +29,6 @@ public class SettingsService {
     }
 
     public void disableTask() {
-        flagsDao.setFlag(EXPORT_TASK_ACTIVE_FLAG, true);
+        flagsDao.setFlag(EXPORT_TASK_ACTIVE_FLAG, false);
     }
 }
