@@ -2,6 +2,7 @@ package ru.cshse.project.sources.kubernetes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
@@ -12,6 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  * @author apollin
  */
 @Component
+@ConditionalOnProperty(prefix = "basic.metrics", name = "mechanism", havingValue = "standalone")
 public class PlainMetricsClient {
 
     private static final Logger logger = LoggerFactory.getLogger(PlainMetricsClient.class);

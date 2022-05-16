@@ -18,7 +18,6 @@ public class PrometheusMetricsProvider implements MetricsProvider {
     private final PrometheusClient prometheusClient;
     private final MetadataCache metadataCache;
 
-    @Autowired
     public PrometheusMetricsProvider(PrometheusClient prometheusClient, MetadataCache metadataCache) {
         this.prometheusClient = prometheusClient;
         this.metadataCache = metadataCache;

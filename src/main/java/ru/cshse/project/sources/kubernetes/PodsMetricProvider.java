@@ -3,7 +3,6 @@ package ru.cshse.project.sources.kubernetes;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.sql.PreparedStatement;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Optional;
@@ -18,6 +17,7 @@ import lombok.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import ru.cshse.project.models.PrometheusMetricDto;
 import ru.cshse.project.parsing.PrometheusMetricsParser;
@@ -27,6 +27,7 @@ import ru.cshse.project.sources.MetricsProvider;
  * @author apollin
  */
 @Component
+@ConditionalOnProperty(prefix = "basic.metrics", name = "mechanism", havingValue = "standalone")
 public class PodsMetricProvider implements MetricsProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(PodsMetricProvider.class);

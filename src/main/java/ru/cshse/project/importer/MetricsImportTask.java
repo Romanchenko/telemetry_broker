@@ -26,7 +26,7 @@ public class MetricsImportTask {
     public MetricsImportTask(
             @Value("${clickhouse.export.batch.size:50}") int batchSize,
             ClickHouseExportService exportService,
-            @Qualifier("podsMetricProvider") MetricsProvider metricsProvider,
+            MetricsProvider metricsProvider,
             SettingsService settingsService
     ) {
         this.batchSize = batchSize;

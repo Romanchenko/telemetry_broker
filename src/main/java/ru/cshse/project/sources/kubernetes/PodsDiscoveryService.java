@@ -11,17 +11,32 @@ import io.kubernetes.client.openapi.apis.CoreV1Api;
 import io.kubernetes.client.openapi.models.V1Endpoints;
 import io.kubernetes.client.openapi.models.V1EndpointsList;
 import io.kubernetes.client.util.ClientBuilder;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.prometheus.PrometheusMeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 /**
  * @author apollin
  */
+@Service
 public class PodsDiscoveryService {
+
+    private final MeterRegistry registry;
+    private final String myNodeName;
+
+    @Autowired
+    public PodsDiscoveryService(PrometheusMeterRegistry registry, @Value("${current.node.name}") String myNodeName) {
+        this.registry = registry;
+        this.myNodeName = myNodeName;
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(PodsDiscoveryService.class);
 
-    public static List<Pod> getAllPods() throws IOException, ApiException {
+    public List<Pod> getAllPods() throws IOException, ApiException {
         ApiClient client = ClientBuilder.cluster().build();
         Configuration.setDefaultApiClient(client);
 
@@ -41,11 +56,15 @@ public class PodsDiscoveryService {
                     continue;
                 }
                 for (var ip: subset.getAddresses()) {
+                    if (!ip.getNodeName().equals(myNodeName)) {
+
+                    }
                     logger.info("Endpoints set {}, namespace {}, address {}, ip {}", eps.getMetadata().getName(), eps.getMetadata().getNamespace(), ip.getHostname(), ip.getIp());
                     pods.add(new Pod(ip.getIp(), eps.getMetadata().getName(), eps.getMetadata().getNamespace()));
                 }
             }
         }
+        registry.gauge("podsInDiscovery", pods.size());
         return pods;
     }
 }
