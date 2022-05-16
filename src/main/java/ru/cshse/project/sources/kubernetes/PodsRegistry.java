@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 public class PodsRegistry {
     private final Map<String, Pod> registry;
 
+    @Autowired
     public PodsRegistry() {
         this.registry = new ConcurrentHashMap<>();
     }

@@ -56,10 +56,12 @@ public class PodsDiscoveryService {
                     continue;
                 }
                 for (var ip: subset.getAddresses()) {
-                    if (!ip.getNodeName().equals(myNodeName)) {
-
-                    }
                     logger.info("Endpoints set {}, namespace {}, address {}, ip {}", eps.getMetadata().getName(), eps.getMetadata().getNamespace(), ip.getHostname(), ip.getIp());
+
+                    if (!myNodeName.equals(ip.getNodeName())) {
+                        logger.info("Node name {} is not equal to {}", ip.getNodeName(), myNodeName);
+                        continue;
+                    }
                     pods.add(new Pod(ip.getIp(), eps.getMetadata().getName(), eps.getMetadata().getNamespace()));
                 }
             }

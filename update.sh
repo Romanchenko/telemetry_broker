@@ -6,6 +6,6 @@ docker build . -t apollin/telemetry-broker-sandbox:v4
 echo "Pushing image"
 docker push apollin/telemetry-broker-sandbox:v4
 echo "delete current deployment"
-kubectl delete -f  resource-manifests/telemetry-broker.yaml
+kubectl delete -f  resource-manifests/telemetry-broker-standalone.yaml
 echo "apply new deployment"
-kubectl apply -f resource-manifests/telemetry-broker.yaml
+kubectl apply -f resource-manifests/telemetry-broker-standalone.yaml

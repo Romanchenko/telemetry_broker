@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: telemetry-broker
+  namespace: telemetry
+  labels:
+    app: telemetry-broker
+spec:
+  selector:
+    matchLabels:
+      app:  telemetry-broker
+  minReadySeconds: 15
+  template:
+    metadata:
+      namespace: telemetry
+      labels:
+        app: telemetry-broker
+        version: v1
+    spec:
+      containers:
+        - image: apollin/telemetry-broker-sandbox:v4
+          imagePullPolicy: Always
+          name: telemetry-broker
+          env:
+            - name: JAEGER_HOST
+              value: jaeger-agent.istio-system.svc.cluster.local
+            - name: JAEGER_SERVICE_NAME
+              value: telemetry-broker
+            - name: PROMETHEUS_URL
+              value: prometheus.istio-system.svc.cluster.local
+            - name: CH_HOST
+              value: 51.250.75.145
+            - name: MONGO_CONNECTION_STRING
+              value: mongodb://main_user:kflkewr45gkasd89@mongo-2.mongo.telemetry-storage/?authSource=admin&readPreference=primary&ssl=false
+            - name: RETRIEVAL_TYPE
+              value: standalone
+            - name: CURRENT_NODE
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: telemetry-broker
+  namespace: telemetry
+  labels:
+    app: telemetry-broker
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: telemetry-broker

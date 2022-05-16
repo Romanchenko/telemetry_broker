@@ -26,8 +26,6 @@ import ru.cshse.project.sources.MetricsProvider;
 /**
  * @author apollin
  */
-@Component
-@ConditionalOnProperty(prefix = "basic.metrics", name = "mechanism", havingValue = "standalone")
 public class PodsMetricProvider implements MetricsProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(PodsMetricProvider.class);
@@ -37,11 +35,10 @@ public class PodsMetricProvider implements MetricsProvider {
     private final PlainMetricsClient client;
     private final int threadCount;
 
-    @Autowired
     public PodsMetricProvider(
             PodsRegistry registry,
             PlainMetricsClient client,
-            @org.springframework.beans.factory.annotation.Value("${pods.metrics.collection.thread.count}") int threadCount
+            int threadCount
     ) {
         this.registry = registry;
         this.client = client;

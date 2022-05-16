@@ -4,7 +4,6 @@ import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import ru.cshse.project.models.Mapper;
 import ru.cshse.project.models.PrometheusMetricDto;
 import ru.cshse.project.sources.MetricsProvider;
