@@ -1,2 +1,3 @@
 .idea
 target
+resource-manifests/secrets.yaml

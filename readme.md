@@ -7,6 +7,7 @@
 
 ![Architecture](Architecture.png)
 ## Структура таблиц в ClickHouse
+В первой версии использовалась простая таблица на движке MergeTree.
 ```
 CREATE DATABASE metrics
 
@@ -22,6 +23,19 @@ CREATE TABLE metrics.metrics (
 )
 ENGINE = MergeTree()
 ORDER BY (ts)
+```
+Используем таблицу с движком GraphiteMergeTree:
+```
+CREATE TABLE metrics.metrics_graphite (
+    Path String,
+    Time DateTime,
+    Value Decimal128(5),
+    Version Int64,
+    le Nullable(String),
+    quantile Nullable(String),
+    labels Array(String)
+) ENGINE = GraphiteMergeTree('metrics_rollup')
+ORDER BY Time
 ```
 ## Историческое развитие
 Изначально хотелось брать сырые метрики, опрашивая инстансы самостоятельно, то есть по факту скопировав функционал прометея.

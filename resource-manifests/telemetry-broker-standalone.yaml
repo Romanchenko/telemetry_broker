@@ -21,6 +21,9 @@ spec:
         - image: apollin/telemetry-broker-sandbox:v4
           imagePullPolicy: Always
           name: telemetry-broker
+          envFrom:
+            - secretRef:
+                name: mongo-connection-string
           env:
             - name: JAEGER_HOST
               value: jaeger-agent.istio-system.svc.cluster.local
@@ -28,10 +31,6 @@ spec:
               value: telemetry-broker
             - name: PROMETHEUS_URL
               value: prometheus.istio-system.svc.cluster.local
-            - name: CH_HOST
-              value: 51.250.75.145
-            - name: MONGO_CONNECTION_STRING
-              value: mongodb://main_user:kflkewr45gkasd89@mongo-2.mongo.telemetry-storage/?authSource=admin&readPreference=primary&ssl=false
             - name: RETRIEVAL_TYPE
               value: standalone
             - name: CURRENT_NODE

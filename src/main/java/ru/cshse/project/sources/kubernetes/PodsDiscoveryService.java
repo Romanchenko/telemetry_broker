@@ -55,8 +55,14 @@ public class PodsDiscoveryService {
                     logger.warn("Subset in subsets {} is null", eps.getMetadata().getName());
                     continue;
                 }
+                if (subset.getAddresses() == null) {
+                    logger.warn("Subset addresses in subsets {} is null", eps.getMetadata().getName());
+                    continue;
+                }
                 for (var ip: subset.getAddresses()) {
-                    logger.info("Endpoints set {}, namespace {}, address {}, ip {}", eps.getMetadata().getName(), eps.getMetadata().getNamespace(), ip.getHostname(), ip.getIp());
+                    logger.info("Endpoints set {}, namespace {}, address {}, ip {}",
+                            eps.getMetadata().getName(), eps.getMetadata().getNamespace(),
+                            ip.getHostname(), ip.getIp());
 
                     if (!myNodeName.equals(ip.getNodeName())) {
                         logger.info("Node name {} is not equal to {}", ip.getNodeName(), myNodeName);

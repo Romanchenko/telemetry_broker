@@ -1,0 +1,175 @@
+openapi: "3.0.0"
+info:
+  version: "1.0"
+  title: "BifrostController"
+  description: Will send your metrics to valhalla
+paths:
+  /settings/export/enable:
+    post:
+      operationId: GlobalExportEnable
+      responses:
+        200:
+          description: "OK"
+
+  /settings/export/disable:
+    post:
+      operationId: GlobalExportDisable
+      responses:
+        200:
+          description: "OK"
+
+  /settings/export/rule:
+    post:
+      operationId: AddRule
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Rule"
+
+  /settings/export/rule/{ruleId}:
+    get:
+      parameters:
+        - in: path
+          name: ruleId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Rule"
+
+
+  /settings/clickhouse:
+    post:
+      operationId: ChangeClickouseConnection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClickHouseSettingsRequest"
+      responses:
+        200:
+          description: "OK"
+
+
+  /info/clickhouse/system:
+    get:
+      operationId: ClickHouseSystemStats
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClickHouseStats"
+
+  /info/clickhouse/redundant_metrics:
+    get:
+      operationId: ClickHouseMetricsStorage
+      description: Get metrics, that tend to be constant and therefore are unnecessary for export
+      parameters:
+        - in: query
+          name: active
+          description: get stats for metrics with enabled (active=true) export or with disabled (active=false)
+          schema:
+            type: boolean
+            default: true
+
+        - in: query
+          name: count
+          description: how many items should be returned in suggest
+          schema:
+            type: number
+            default: 5
+        - in: query
+          name: window
+          description: window size to evaluate standard deviation
+          schema:
+            type: number
+            default: 100
+
+        - in: query
+          name: threshold
+          description: the maximum value of standard deviation to suggest metric for removal
+          schema:
+            type: number
+            default: 0.01
+
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RedundantMetricsResponse"
+
+components:
+
+  schemas:
+
+    ClickHouseStats:
+      type: object
+      properties:
+        cpuUsage:
+          type: string
+        diskFreeBytes:
+          type: number
+
+
+    ClickHouseSettingsRequest:
+      type: object
+      properties:
+        connectionString:
+          type: string
+        connectionPort:
+          type: number
+        user:
+          type: string
+        password:
+          type: string
+
+    Rule:
+      type: object
+      properties:
+        ruleId:
+          type: string
+        path:
+          type: string
+        port:
+          type: number
+        endpoint:
+          type: string
+        namespace:
+          type: string
+      required:
+        - ruleId
+        - path
+        - port
+        - endpoint
+
+    RedundantMetric:
+      type: object
+      properties:
+        metricName:
+          type: string
+        stddev:
+          type: number
+        absdif:
+          type: number
+
+
+
+    RedundantMetricsResponse:
+      type: object
+      properties:
+        result:
+          type: array
+          items:
+            $ref: "#/components/schemas/RedundantMetric"
