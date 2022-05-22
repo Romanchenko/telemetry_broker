@@ -26,6 +26,10 @@ public class PlainMetricsClient {
     private static final String DEFAULT_ENDPOINT = "/stats/prometheus";
 
     public String get(String ip) {
+        return get(ip, DEFAULT_PORT, DEFAULT_ENDPOINT);
+    }
+
+    public String get(String ip, int port, String endPoint) {
         var localClient = WebClient.builder()
                 .baseUrl(UriComponentsBuilder
                         .fromHttpUrl("http://" + ip)

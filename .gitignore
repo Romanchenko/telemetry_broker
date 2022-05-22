@@ -1,3 +1,4 @@
 .idea
 target
 resource-manifests/secrets.yaml
+node_exporter_metrics.txt
